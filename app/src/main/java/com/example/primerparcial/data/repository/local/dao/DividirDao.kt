@@ -17,7 +17,7 @@ interface DividirDao {
         """
             SELECT *
             FROM Dividores
-            WHERE DividirId=:id
+            WHERE dividirId=:id
             LIMIT 1
         """
     )

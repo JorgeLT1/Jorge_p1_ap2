@@ -22,9 +22,9 @@ class DividirViewModel @Inject constructor(
 ) : ViewModel() {
 
     var Nombre by mutableStateOf("")
-    var Dividido by mutableStateOf(0)
-    var Divisor by mutableStateOf(0)
-    var Cociente by mutableStateOf(0)
+    var Dividido by mutableStateOf(0.0)
+    var Divisor by mutableStateOf(0.0)
+    var Cociente by mutableStateOf(0.0)
     var Residuo by mutableStateOf(0.0)
 
     private val _isMessageShown = MutableSharedFlow<Boolean>()
@@ -35,8 +35,10 @@ class DividirViewModel @Inject constructor(
         }
     }
 
-    fun Validar() : Boolean{
-        return !(Nombre == "" || Dividido == 0 || Divisor == 0 || Cociente == 0 || Residuo == 0.0)
+    fun validar() : Boolean{
+
+
+        return !(Nombre == "" || Dividido == 0.0 || Divisor == 0.0 || Cociente == 0.0 || Residuo == 0.0)
     }
     val dividir: StateFlow<List<Dividir>> = repository.getAll().stateIn(
         scope = viewModelScope,
@@ -48,10 +50,27 @@ class DividirViewModel @Inject constructor(
         viewModelScope.launch {
             val dividir = Dividir(
                 nombre = Nombre,
-
+                dividido = Dividido,
+                divisor = Divisor,
+                cociente = Cociente,
+                residuo = Residuo,
             )
-
+            repository.save(dividir)
+            limpiar()
         }
+    }
+
+    fun limpiar()
+    {
+        Nombre = ""
+        Dividido = 0.0
+        Divisor = 0.0
+        Cociente = 0.0
+        Residuo = 0.0
+    }
+    fun division()
+    {
+        Residuo = Divisor * Cociente / Dividido
     }
 
 
