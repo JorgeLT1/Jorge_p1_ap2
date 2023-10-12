@@ -1,11 +1,9 @@
 package com.example.primerparcial.ui.dividir
 
-import android.widget.Space
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.IntrinsicSize
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,7 +23,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -46,9 +43,9 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
-import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -82,11 +79,11 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                 title = { Text(text = "Aprende a dividir") },
                 actions = {
                     IconButton(onClick = {
-                        viewModel.Nombre = ""
-                        viewModel.Dividido = 0
-                        viewModel.Divisor = 0
-                        viewModel.Cociente = 0
-                        viewModel.Residuo = 0
+                        viewModel.nombre = ""
+                        viewModel.dividendo = 0
+                        viewModel.divisor = 0
+                        viewModel.cociente = 0
+                        viewModel.residuo = 0
 
                     }) {
                         Icon(
@@ -113,74 +110,123 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
             ) {
 
                 OutlinedTextField(
-                    value = viewModel.Nombre,
-                    onValueChange = { viewModel.Nombre = it },
+                    value = viewModel.nombre,
+                    onValueChange = { viewModel.nombre = it },
                     modifier = Modifier.fillMaxWidth(),
                     label = { Text(text = "Nombre") },
                     singleLine = true
                 )
+                if (viewModel.nombreVacio == false)
+                {
+                    Text(text = "El nombre es requerido.", color = Color.Red, fontSize = 12.sp)
+                }
+
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Row {
-                    OutlinedTextField(
-                        value = viewModel.Dividido.toString(),
-                        onValueChange = {
-                            val newValue = it.toInt()
-                            if (newValue != null) {
-                                viewModel.Dividido = newValue
-                            }
-                        },
-                        modifier = Modifier.weight(1f),
-                        label = { Text(text = "Dividido") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
-                    )
+                    Column(modifier = Modifier.padding(5.dp).weight(1f)){
+                        OutlinedTextField(
+                            value = viewModel.dividendo.toString(),
+                            onValueChange = {
+                                val newValue = it.toInt()
+                                if (newValue != null) {
+                                    viewModel.dividendo = newValue
+                                }
+                            },
+                            label = { Text(text = "Dividendo") },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                        )
+                        if (viewModel.vacioDividido == false)
+                        {
+                            Text(text = "Dividendo requerido.", color = Color.Red, fontSize = 12.sp)
+                        }
+
+                    }
+
                     Spacer(modifier = Modifier.width(16.dp))
-                    OutlinedTextField(
-                        value = viewModel.Divisor.toString(),
-                        onValueChange = {
-                            val newValue = it.toInt()
-                            if (newValue != null) {
-                                viewModel.Divisor = newValue
-                            }
-                        },
-                        modifier = Modifier.weight(1f),
-                        label = { Text(text = "Divisor") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
-                    )
+
+                    Column(modifier = Modifier.padding(5.dp).weight(1f)){
+                        OutlinedTextField(
+                            value = viewModel.divisor.toString(),
+                            onValueChange = {
+                                val newValue = it.toInt()
+                                if (newValue != null) {
+                                    viewModel.divisor = newValue
+                                }
+                            },
+                            label = { Text(text = "Divisor") },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
+                        )
+                        if (viewModel.vacioDivisor == false)
+                        {
+                            Text(text = "Divisor requerido.", color = Color.Red, fontSize = 12.sp)
+                        }
+                        if (viewModel.validarDivisor == false)
+                        {
+                            Text(text = "Divisor incorrecto.", color = Color.Red, fontSize = 12.sp)
+                        }
+                    }
+
+
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
                 Row {
-                    OutlinedTextField(
-                        value = viewModel.Cociente.toString(),
-                        onValueChange = {
-                            val newValue = it.toInt()
-                            if (newValue != null) {
-                                viewModel.Cociente = newValue
-                            }
-                        },
-                        modifier = Modifier.weight(1f),
-                        label = { Text(text = "Cociente") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
-                    )
-                    Spacer(modifier = Modifier.width(16.dp))
 
-                    OutlinedTextField(
-                        value = viewModel.Residuo.toString(),
-                        onValueChange = {
-                            val newValue = it.toInt()
-                            if (newValue != null) {
-                                viewModel.Residuo = newValue
-                            }
-                        },
-                        modifier = Modifier.weight(1f),
-                        label = { Text(text = "Residuo") },
-                        singleLine = true,
-                        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
-                    )
+                    Column(modifier = Modifier.padding(5.dp).weight(1f)) {
+
+                        OutlinedTextField(
+                            value = viewModel.cociente.toString(),
+                            onValueChange = {
+                                val newValue = it.toInt()
+                                if (newValue != null) {
+                                    viewModel.cociente = newValue
+                                }
+                            },
+                            label = { Text(text = "Cociente") },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Next,
+                                keyboardType = KeyboardType.Number
+                            )
+                        )
+                        if (viewModel.vacioCociente == false)
+                        {
+                            Text(text = "Cociente requerido.", color = Color.Red, fontSize = 12.sp)
+                        }
+                        if (viewModel.validarCociente == false)
+                        {
+                            Text(text = "Cociente invalido.", color = Color.Red, fontSize = 12.sp)
+                        }
+                    }
+                    Spacer(modifier = Modifier.width(16.dp))
+                    Column(modifier = Modifier.padding(5.dp).weight(1f)) {
+                        OutlinedTextField(
+                            value = viewModel.residuo.toString(),
+                            onValueChange = {
+                                val newValue = it.toInt()
+                                if (newValue != null) {
+                                    viewModel.residuo = newValue
+                                }
+                            },
+                            label = { Text(text = "Residuo") },
+                            singleLine = true,
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Next,
+                                keyboardType = KeyboardType.Number
+                            )
+                        )
+                        if (viewModel.vacioResiduo == false)
+                        {
+                            Text(text = "Residuo requerido.", color = Color.Red, fontSize = 12.sp)
+                        }
+                        if (viewModel.validarResiduo == false)
+                        {
+                            Text(text = "Residuo invalido.", color = Color.Red, fontSize = 12.sp)
+                        }
+                    }
                 }
                 Spacer(modifier = Modifier.height(10.dp))
 
@@ -189,7 +235,6 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                 OutlinedButton(onClick = {
                     keyboardController?.hide()
                     if (viewModel.validar()) {
-                        viewModel.Dividido = viewModel.Cociente * viewModel.Divisor + viewModel.Residuo
                         viewModel.save()
                     }
                 }, modifier = Modifier.fillMaxWidth())
@@ -221,11 +266,15 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                             .padding(13.dp)
                             .fillMaxWidth()
                             .background(Color(0xFFB3E5FC))
-                            .border(width = 1.dp, color = Color.Black, shape = RoundedCornerShape(10.dp))
+                            .border(
+                                width = 1.dp,
+                                color = Color.Black,
+                                shape = RoundedCornerShape(10.dp)
+                            )
                             .padding(13.dp)
                     ) {
                         Text(text = "Nombre: " + division.nombre)
-                        Text(text = "Division: " + division.dividido.toString())
+                        Text(text = "Division: " + division.dividendo.toString())
                         Text(text = "Divisor: " + division.divisor.toString())
                         Text(text = "Cociente: " + division.cociente.toString())
                         Text(text = "Residuo: "+ division.residuo.toString())

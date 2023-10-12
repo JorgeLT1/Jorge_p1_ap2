@@ -8,7 +8,7 @@ data class Dividir(
     @PrimaryKey
     val dividirId : Int? = null,
     var nombre: String = "",
-    var dividido: Int? = null,
+    var dividendo: Int? = null,
     var divisor: Int? = null,
     var cociente: Int? = null,
     var residuo: Int? = null,

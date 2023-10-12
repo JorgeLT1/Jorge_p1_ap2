@@ -8,7 +8,7 @@ import com.example.primerparcial.data.repository.local.entities.Dividir
 
 @Database(
     entities = [Dividir::class],
-    version = 3
+    version = 4
 )
 abstract class Database : RoomDatabase(){
     abstract fun DividirDao() : DividirDao

@@ -21,11 +21,22 @@ class DividirViewModel @Inject constructor(
     private val repository: DividirRepository
 ) : ViewModel() {
 
-    var Nombre by mutableStateOf("")
-    var Dividido by mutableStateOf(0)
-    var Divisor by mutableStateOf(0)
-    var Cociente by mutableStateOf(0)
-    var Residuo by mutableStateOf(0)
+    var nombre by mutableStateOf("")
+    var dividendo by mutableStateOf(0)
+    var divisor by mutableStateOf(0)
+    var cociente by mutableStateOf(0)
+    var residuo by mutableStateOf(0)
+    var nombreVacio by mutableStateOf(true)
+    var vacioDividido by mutableStateOf(true)
+    var vacioDivisor by mutableStateOf(true)
+    var vacioCociente by mutableStateOf(true)
+    var vacioResiduo by mutableStateOf(true)
+    var validacionDividento by mutableStateOf(true)
+    var validarDivisor by mutableStateOf(true)
+    var validarCociente by mutableStateOf(true)
+    var validarResiduo by mutableStateOf(true)
+
+
 
     private val _isMessageShown = MutableSharedFlow<Boolean>()
     val isMessageShownFlow = _isMessageShown.asSharedFlow()
@@ -35,11 +46,98 @@ class DividirViewModel @Inject constructor(
         }
     }
 
+
     fun validar() : Boolean{
 
+        if(nombre == "")
+        {
+            nombreVacio = false
+        }
+        else
+        {
+            nombreVacio = true
+        }
 
-        return !(Nombre == "" || Dividido == 0 || Divisor == 0 || Cociente == 0 || Residuo == 0)
+        if (dividendo <= 0)
+        {
+            vacioDividido = false
+        }
+        else
+        {
+            vacioDividido = true
+        }
+
+        if (divisor <=0)
+        {
+            vacioDivisor = false
+        }
+        else
+        {
+            vacioDivisor = true
+        }
+
+        if (cociente <=0)
+        {
+            vacioCociente = false
+        }
+        else
+        {
+            vacioCociente = true
+        }
+
+        if (residuo < 0)
+        {
+            vacioResiduo = false
+        }
+        else
+        {
+            vacioResiduo = true
+        }
+
+        if(dividendo == cociente * divisor + residuo)
+        {
+            validacionDividento = true
+        }
+        else
+        {
+            validacionDividento = false
+
+            var concienteCalculado = dividendo / divisor
+            var residuoCalculado = dividendo % divisor
+
+            if (concienteCalculado!= cociente)
+            {
+                validarCociente =false
+            }
+            else
+            {
+                validarCociente =true
+            }
+
+            if(residuoCalculado!= residuo)
+            {
+                validarResiduo = false
+            }
+            else
+            {
+                validarResiduo = true
+            }
+        }
+
+        if(divisor > dividendo)
+        {
+            validarDivisor = false
+        }
+        else
+        {
+            validarDivisor = true
+        }
+
+        return !(nombre == "" || dividendo == 0 || divisor == 0 || cociente == 0|| validacionDividento == false)
     }
+
+
+
     val dividir: StateFlow<List<Dividir>> = repository.getAll().stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5_000),
@@ -49,11 +147,11 @@ class DividirViewModel @Inject constructor(
     fun save(){
         viewModelScope.launch {
             val dividir = Dividir(
-                nombre = Nombre,
-                dividido = Dividido,
-                divisor = Divisor,
-                cociente = Cociente,
-                residuo = Residuo,
+                nombre = nombre,
+                dividendo = dividendo,
+                divisor = divisor,
+                cociente = cociente,
+                residuo = residuo,
             )
             repository.save(dividir)
             limpiar()
@@ -66,15 +164,13 @@ class DividirViewModel @Inject constructor(
         }
     }
 
-
-
     fun limpiar()
     {
-        Nombre = ""
-        Dividido = 0
-        Divisor = 0
-        Cociente = 0
-        Residuo = 0
+        nombre = ""
+        dividendo = 0
+        divisor = 0
+        cociente = 0
+        residuo = 0
     }
 
 
