@@ -49,49 +49,21 @@ class DividirViewModel @Inject constructor(
 
     fun validar() : Boolean{
 
-        if(nombre == "")
-        {
-            nombreVacio = false
-        }
-        else
-        {
-            nombreVacio = true
-        }
+        nombreVacio = nombre != ""
 
-        if (dividendo <= 0)
-        {
-            vacioDividido = false
-        }
-        else
-        {
-            vacioDividido = true
-        }
+        vacioDividido = dividendo > 0
 
-        if (divisor <=0)
-        {
+        vacioDivisor = divisor > 0
+
+        vacioCociente = cociente > 0
+
+        vacioResiduo = residuo >= 0
+
+        if(divisor <= 0){
             vacioDivisor = false
-        }
-        else
-        {
+            return false
+        }else{
             vacioDivisor = true
-        }
-
-        if (cociente <=0)
-        {
-            vacioCociente = false
-        }
-        else
-        {
-            vacioCociente = true
-        }
-
-        if (residuo < 0)
-        {
-            vacioResiduo = false
-        }
-        else
-        {
-            vacioResiduo = true
         }
 
         if(dividendo == cociente * divisor + residuo)
@@ -102,36 +74,16 @@ class DividirViewModel @Inject constructor(
         {
             validacionDividento = false
 
+
             var concienteCalculado = dividendo / divisor
             var residuoCalculado = dividendo % divisor
 
-            if (concienteCalculado!= cociente)
-            {
-                validarCociente =false
-            }
-            else
-            {
-                validarCociente =true
-            }
+            validarCociente = concienteCalculado == cociente
 
-            if(residuoCalculado!= residuo)
-            {
-                validarResiduo = false
-            }
-            else
-            {
-                validarResiduo = true
-            }
+            validarResiduo = residuoCalculado == residuo
         }
 
-        if(divisor > dividendo)
-        {
-            validarDivisor = false
-        }
-        else
-        {
-            validarDivisor = true
-        }
+        validarDivisor = divisor <= dividendo
 
         return !(nombre == "" || dividendo == 0 || divisor == 0 || cociente == 0|| validacionDividento == false)
     }
@@ -171,6 +123,7 @@ class DividirViewModel @Inject constructor(
         divisor = 0
         cociente = 0
         residuo = 0
+
     }
 
 

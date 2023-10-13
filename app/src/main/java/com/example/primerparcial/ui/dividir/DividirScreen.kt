@@ -135,7 +135,7 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                             },
                             label = { Text(text = "Dividendo") },
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next)
+                            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
                         )
                         if (viewModel.vacioDividido == false)
                         {
