@@ -128,7 +128,7 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                         OutlinedTextField(
                             value = viewModel.dividendo.toString(),
                             onValueChange = {
-                                val newValue = it.toInt()
+                                val newValue = it.toIntOrNull()
                                 if (newValue != null) {
                                     viewModel.dividendo = newValue
                                 }
@@ -150,7 +150,7 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                         OutlinedTextField(
                             value = viewModel.divisor.toString(),
                             onValueChange = {
-                                val newValue = it.toInt()
+                                val newValue = it.toIntOrNull()
                                 if (newValue != null) {
                                     viewModel.divisor = newValue
                                 }
@@ -180,7 +180,7 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                         OutlinedTextField(
                             value = viewModel.cociente.toString(),
                             onValueChange = {
-                                val newValue = it.toInt()
+                                val newValue = it.toIntOrNull()
                                 if (newValue != null) {
                                     viewModel.cociente = newValue
                                 }
@@ -206,7 +206,7 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                         OutlinedTextField(
                             value = viewModel.residuo.toString(),
                             onValueChange = {
-                                val newValue = it.toInt()
+                                val newValue = it.toIntOrNull()
                                 if (newValue != null) {
                                     viewModel.residuo = newValue
                                 }
