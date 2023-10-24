@@ -320,8 +320,9 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                                 onClick = {
                                     viewModel.delete(division)
                                 },
-                            ) {
-                                Icon(imageVector = Icons.Default.Clear, contentDescription = "")
+                                shape = MaterialTheme.shapes.medium,
+                                ) {
+                                Icon(imageVector = Icons.Default.Clear, contentDescription = "", tint = Color.Red)
                             }
                         }
                         Divider(
