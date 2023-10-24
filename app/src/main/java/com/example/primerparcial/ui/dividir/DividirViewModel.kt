@@ -49,15 +49,50 @@ class DividirViewModel @Inject constructor(
 
     fun validar() : Boolean{
 
-        nombreVacio = nombre != ""
+        if(nombre == "")
+        {
+            nombreVacio = false
+        }
+        else
+        {
+            nombreVacio = true
+        }
 
-        vacioDividido = dividendo > 0
+        if (dividendo <= 0)
+        {
+            vacioDividido = false
+        }
+        else
+        {
+            vacioDividido = true
+        }
 
-        vacioDivisor = divisor > 0
+        if (divisor <=0)
+        {
+            vacioDivisor = false
+        }
+        else
+        {
+            vacioDivisor = true
+        }
 
-        vacioCociente = cociente > 0
+        if (cociente <=0)
+        {
+            vacioCociente = false
+        }
+        else
+        {
+            vacioCociente = true
+        }
 
-        vacioResiduo = residuo >= 0
+        if (residuo < 0)
+        {
+            vacioResiduo = false
+        }
+        else
+        {
+            vacioResiduo = true
+        }
 
         if(divisor <= 0){
             vacioDivisor = false
@@ -65,6 +100,7 @@ class DividirViewModel @Inject constructor(
         }else{
             vacioDivisor = true
         }
+
 
         if(dividendo == cociente * divisor + residuo)
         {
@@ -74,16 +110,36 @@ class DividirViewModel @Inject constructor(
         {
             validacionDividento = false
 
-
             var concienteCalculado = dividendo / divisor
             var residuoCalculado = dividendo % divisor
 
-            validarCociente = concienteCalculado == cociente
+            if (concienteCalculado!= cociente)
+            {
+                validarCociente =false
+            }
+            else
+            {
+                validarCociente =true
+            }
 
-            validarResiduo = residuoCalculado == residuo
+            if(residuoCalculado!= residuo)
+            {
+                validarResiduo = false
+            }
+            else
+            {
+                validarResiduo = true
+            }
         }
 
-        validarDivisor = divisor <= dividendo
+        if(divisor > dividendo)
+        {
+            validarDivisor = false
+        }
+        else
+        {
+            validarDivisor = true
+        }
 
         return !(nombre == "" || dividendo == 0 || divisor == 0 || cociente == 0|| validacionDividento == false)
     }

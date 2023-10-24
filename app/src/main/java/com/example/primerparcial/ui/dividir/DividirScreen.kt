@@ -2,6 +2,7 @@ package com.example.primerparcial.ui.dividir
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -16,13 +17,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -30,6 +36,7 @@ import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -116,15 +123,18 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                     label = { Text(text = "Nombre") },
                     singleLine = true
                 )
-                if (viewModel.nombreVacio == false)
-                {
+                if (viewModel.nombreVacio == false) {
                     Text(text = "El nombre es requerido.", color = Color.Red, fontSize = 12.sp)
                 }
 
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Row {
-                    Column(modifier = Modifier.padding(5.dp).weight(1f)){
+                    Column(
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .weight(1f)
+                    ) {
                         OutlinedTextField(
                             value = viewModel.dividendo.toString(),
                             onValueChange = {
@@ -135,10 +145,12 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                             },
                             label = { Text(text = "Dividendo") },
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Next,
+                                keyboardType = KeyboardType.Number
+                            )
                         )
-                        if (viewModel.vacioDividido == false)
-                        {
+                        if (viewModel.vacioDividido == false) {
                             Text(text = "Dividendo requerido.", color = Color.Red, fontSize = 12.sp)
                         }
 
@@ -146,7 +158,11 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
 
                     Spacer(modifier = Modifier.width(16.dp))
 
-                    Column(modifier = Modifier.padding(5.dp).weight(1f)){
+                    Column(
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .weight(1f)
+                    ) {
                         OutlinedTextField(
                             value = viewModel.divisor.toString(),
                             onValueChange = {
@@ -157,14 +173,15 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                             },
                             label = { Text(text = "Divisor") },
                             singleLine = true,
-                            keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Next, keyboardType = KeyboardType.Number)
+                            keyboardOptions = KeyboardOptions.Default.copy(
+                                imeAction = ImeAction.Next,
+                                keyboardType = KeyboardType.Number
+                            )
                         )
-                        if (viewModel.vacioDivisor == false)
-                        {
+                        if (viewModel.vacioDivisor == false) {
                             Text(text = "Divisor requerido.", color = Color.Red, fontSize = 12.sp)
                         }
-                        if (viewModel.validarDivisor == false)
-                        {
+                        if (viewModel.validarDivisor == false) {
                             Text(text = "Divisor incorrecto.", color = Color.Red, fontSize = 12.sp)
                         }
                     }
@@ -175,7 +192,11 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                 Spacer(modifier = Modifier.height(10.dp))
                 Row {
 
-                    Column(modifier = Modifier.padding(5.dp).weight(1f)) {
+                    Column(
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .weight(1f)
+                    ) {
 
                         OutlinedTextField(
                             value = viewModel.cociente.toString(),
@@ -192,17 +213,19 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                                 keyboardType = KeyboardType.Number
                             )
                         )
-                        if (viewModel.vacioCociente == false)
-                        {
+                        if (viewModel.vacioCociente == false) {
                             Text(text = "Cociente requerido.", color = Color.Red, fontSize = 12.sp)
                         }
-                        if (viewModel.validarCociente == false)
-                        {
+                        if (viewModel.validarCociente == false) {
                             Text(text = "Cociente invalido.", color = Color.Red, fontSize = 12.sp)
                         }
                     }
                     Spacer(modifier = Modifier.width(16.dp))
-                    Column(modifier = Modifier.padding(5.dp).weight(1f)) {
+                    Column(
+                        modifier = Modifier
+                            .padding(5.dp)
+                            .weight(1f)
+                    ) {
                         OutlinedTextField(
                             value = viewModel.residuo.toString(),
                             onValueChange = {
@@ -218,12 +241,10 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
                                 keyboardType = KeyboardType.Number
                             )
                         )
-                        if (viewModel.vacioResiduo == false)
-                        {
+                        if (viewModel.vacioResiduo == false) {
                             Text(text = "Residuo requerido.", color = Color.Red, fontSize = 12.sp)
                         }
-                        if (viewModel.validarResiduo == false)
-                        {
+                        if (viewModel.validarResiduo == false) {
                             Text(text = "Residuo invalido.", color = Color.Red, fontSize = 12.sp)
                         }
                     }
@@ -232,73 +253,87 @@ fun DividirScreen(viewModel: DividirViewModel = hiltViewModel()) {
 
                 val keyboardController =
                     LocalSoftwareKeyboardController.current
-                OutlinedButton(onClick = {
-                    keyboardController?.hide()
-                    if (viewModel.validar()) {
-                        viewModel.save()
-                    }
-                }, modifier = Modifier.fillMaxWidth())
-                {
-                    Icon(imageVector = Icons.Default.CheckCircle, contentDescription = "Guardar")
+                OutlinedButton(
+                    onClick = {
+                        keyboardController?.hide()
+                        if (viewModel.validar()) {
+                            viewModel.save()
+                        }
+                    },
+                    modifier = Modifier.fillMaxWidth(),
+                    shape = MaterialTheme.shapes.medium,
+
+                    ) {
+                    Icon(imageVector = Icons.Default.Check, contentDescription = "Guardar")
                     Text(text = "Guardar")
                 }
             }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp)
-                    .border(width = 0.5.dp, color = Color.Black, shape = RoundedCornerShape(5.dp))
-                    .padding(10.dp),
-                contentAlignment = Alignment.Center
-            ) {
-                Text(
-                    text = "Historial de resultados",
-                    style = TextStyle(fontSize = 19.sp),
-                    modifier = Modifier.align(Alignment.Center)
-                )
+            Row {
+                Text(text = "Historial de resultados", style = MaterialTheme.typography.titleMedium)
+                Icon(imageVector = Icons.Filled.Info, contentDescription = "Info icon")
             }
+
+            Divider(
+                Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 8.dp))
+
 
             LazyColumn(modifier = Modifier.fillMaxWidth()) {
                 items(dividir) { division ->
-                    Column(
+                    Box(
                         modifier = Modifier
-                            .padding(13.dp)
-                            .fillMaxWidth()
-                            .background(Color(0xFFB3E5FC))
-                            .border(
-                                width = 1.dp,
-                                color = Color.Black,
-                                shape = RoundedCornerShape(10.dp)
-                            )
-                            .padding(13.dp)
-                    ) {
-                        Text(text = "Nombre: " + division.nombre)
-                        Text(text = "Division: " + division.dividendo.toString())
-                        Text(text = "Divisor: " + division.divisor.toString())
-                        Text(text = "Cociente: " + division.cociente.toString())
-                        Text(text = "Residuo: "+ division.residuo.toString())
-
-                        Button(
-                            onClick = { viewModel.delete(division) },
+                            .fillMaxSize()
+                    )
+                    {
+                        Column(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(13.dp),
-                            colors = ButtonDefaults.buttonColors(
-                                contentColor = Color.White
-                            )
+                                .align(Alignment.CenterStart),
+                            verticalArrangement = Arrangement.spacedBy(8.dp)
+
                         ) {
-                            Text(text = "Eliminar")
+                            Text(text = division.nombre, style = MaterialTheme.typography.titleMedium)
+                            Row {
+                                Text(text = "Dividendo: " + division.dividendo.toString(), style = MaterialTheme.typography.titleMedium)
+                                Spacer(modifier = Modifier.width(30.dp))
+                                Text(text = "Divisor: " + division.divisor.toString(), style = MaterialTheme.typography.titleMedium)
+                            }
+
+                            Spacer(modifier = Modifier.height(14.dp))
+
+                            Row {
+                                Text(text = "Cociente: " + division.cociente.toString(), style = MaterialTheme.typography.titleMedium)
+                                Spacer(modifier = Modifier.width(30.dp))
+                                Text(text = "Residuo: " + division.residuo.toString(), style = MaterialTheme.typography.titleMedium)
+                            }
                         }
+                        Column(
+                            modifier = Modifier.align(Alignment.TopEnd)
+                        )
+                        {
+                            Text(
+                                text = "Delete",
+                                modifier = Modifier.padding(8.dp),
+                            )
+                            OutlinedButton(
+                                onClick = {
+                                    viewModel.delete(division)
+                                },
+                            ) {
+                                Icon(imageVector = Icons.Default.Clear, contentDescription = "")
+                            }
+                        }
+                        Divider(
+                            Modifier
+                                .fillMaxWidth()
+                                .padding(horizontal = 8.dp))
                     }
                 }
             }
-
-
-
-        }
         }
     }
+}
 
 
 
